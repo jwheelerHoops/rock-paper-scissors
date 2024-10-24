@@ -1,5 +1,6 @@
 let humanScore = 0
 let computerScore = 0
+let round = 1
 
 function getComputerChoice() {
     let choice
@@ -81,6 +82,80 @@ function playGame() {
     return(result)
 }
 
-gameResult = playGame()
+function logGameResult(result) {
+    const gameResults = document.getElementById("game-results");
 
-console.log(gameResult)
+    const gameLog = document.createElement("li");
+    gameLog.textContent = "Round " + round + ": " + result;
+
+    gameResults.appendChild(gameLog);
+}
+
+function displayScore(humanScore, computerScore) {
+    const score = humanScore + "-" + computerScore;
+
+    const scoreHeading = document.getElementById("current-score");
+    scoreHeading.textContent = "";
+    scoreHeading.textContent = score;
+
+    if (humanScore == 5 || computerScore == 5) {
+        displayResults(humanScore, computerScore)
+    }
+}
+
+function displayResults(humanScore, computerScore) {
+    if (humanScore < computerScore) {
+        result = "Computer Wins: " + computerScore + "-" + humanScore
+    } else if (humanScore > computerScore) {
+        result = "You Win: " + humanScore + "-" + computerScore
+    }
+
+    const resultsDiv = document.getElementById("results")
+
+    const postGame = document.createElement("div");
+    postGame.setAttribute("id", "post-game");
+    postGame.textContent = result;
+
+    const resetBtn = document.createElement("button");
+    resetBtn.setAttribute("id", "reset-button");
+    resetBtn.textContent = "Reset Game";
+
+    postGame.appendChild(resetBtn);
+    resultsDiv.appendChild(postGame);
+
+    resetBtn.addEventListener("click", () => {
+        resetGame();
+    })
+}
+
+function resetGame() {
+    humanScore = 0;
+    computerScore = 0;
+    round = 1;
+
+    const scoreHeading = document.getElementById("current-score");
+    scoreHeading.textContent = "";
+
+    const gameResults = document.getElementById("game-results");
+    while (gameResults.lastElementChild) {
+        gameResults.removeChild(gameResults.lastElementChild);
+    }
+
+    const postGame = document.getElementById("post-game");
+    postGame.remove();
+}
+
+const buttons = document.querySelectorAll("button.human-choice");
+
+buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+        const playerChoice = button.getAttribute("id").toUpperCase();
+        const computerChoice = getComputerChoice();
+
+        if (humanScore < 5 && computerScore < 5) {
+            logGameResult(playRound(playerChoice, computerChoice));
+            displayScore(humanScore, computerScore);
+            round++
+        };
+    })
+})
