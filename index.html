@@ -3,9 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+    <title>Rock, Paper, Scissors</title>
 </head>
 <body>
+    <div class="container">
+        <div class="header">
+            <h1 class="header-txt">Rock, Paper, Scisscors</h1>
+        </div>
+        <div class="game">
+            <h1 class="game-header">Make Your Selection</h1>
+            <div class="buttons">
+                <button class="human-choice" id="rock">Rock</button>
+                <button class="human-choice" id="paper">Paper</button>
+                <button class="human-choice" id="scissors">Scissors</button>
+            </div>
+            <div id="results">
+                <h2 id="current-score"></h2>
+                <ul id="game-results"></ul>
+            </div>
+        </div>
+    </div>
     <script src="rps.js"></script>
 </body>
 </html>
